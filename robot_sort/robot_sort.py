@@ -1,3 +1,5 @@
+
+
 class SortingRobot:
     def __init__(self, l):
         """
@@ -10,17 +12,26 @@ class SortingRobot:
         self._time = 0          # A time counter (stretch)
 
     def can_move_right(self):
+        # if self._position < self._list[-1]: 
+        #     return True
+        # else: return False
         """
         Returns True if the robot can move right or False if it's
         at the end of the list.
         """
+        
         return self._position < len(self._list) - 1
+        
 
     def can_move_left(self):
+        # if self._position < self._list[0]: 
+        #     return True
+        # else: return False
         """
         Returns True if the robot can move left or False if it's
         at the start of the list.
         """
+        
         return self._position > 0
 
     def move_right(self):
@@ -32,6 +43,7 @@ class SortingRobot:
         self._time += 1
         if self._position < len(self._list) - 1:
             self._position += 1
+            print("Moved RIGHT")
             return True
         else:
             return False
@@ -45,6 +57,7 @@ class SortingRobot:
         self._time += 1
         if self._position > 0:
             self._position -= 1
+            print("Moved LEFT")
             return True
         else:
             return False
@@ -68,6 +81,8 @@ class SortingRobot:
         If either item is None, return None.
         """
         if self._item is None or self._list[self._position] is None:
+            print("compare Item is None")
+            print(self._item, "selfItem")
             return None
         elif self._item > self._list[self._position]:
             return 1
@@ -92,12 +107,44 @@ class SortingRobot:
         """
         return self._light == "ON"
 
+
     def sort(self):
-        """
-        Sort the robot's list.
-        """
-        # Fill this out
-        pass
+        stat = f" position {self._list[self._position]}, item {self._item}, time {self._time}"
+        print(stat)
+        if self._time > 10:
+                print("self")
+                return("self")
+        if self.compare_item() == None and self.light_is_on() == False:
+            self.swap_item()
+            self.move_right()
+            self.set_light_on()
+            print(stat, "set to True")
+            self.sort()
+        if self.compare_item() == -1 and self.can_move_right() == True:
+            self.swap_item()
+            self.move_right()
+            self.sort()
+        if self.compare_item() == -1 and self.can_move_left() == True:
+            self.swap_item()
+            self.move_left
+            self.sort()
+        if self.compare_item() == 1 and self.can_move_right() == True:
+            self.move_right()
+            self.sort()
+        if self.compare_item() == 1 and self.can_move_left() == True:
+            self.move_left()
+            self.sort()
+        
+
+            
+        
+
+
+     
+      
+            
+    
+            
 
 
 if __name__ == "__main__":
