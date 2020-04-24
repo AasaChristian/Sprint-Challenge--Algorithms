@@ -43,7 +43,7 @@ class SortingRobot:
         self._time += 1
         if self._position < len(self._list) - 1:
             self._position += 1
-            print("Moved RIGHT")
+            print("Moved RIGHT 46")
             return True
         else:
             return False
@@ -57,12 +57,13 @@ class SortingRobot:
         self._time += 1
         if self._position > 0:
             self._position -= 1
-            print("Moved LEFT")
+            print("Moved LEFT 60")
             return True
         else:
             return False
 
     def swap_item(self):
+        print("swap 66")
         """
         The robot swaps its currently held item with the list item in front
         of it.
@@ -81,8 +82,8 @@ class SortingRobot:
         If either item is None, return None.
         """
         if self._item is None or self._list[self._position] is None:
-            print("compare Item is None")
-            print(self._item, "selfItem")
+            print("compare Item is None 85")
+            print(self._item, "self.Item")
             return None
         elif self._item > self._list[self._position]:
             return 1
@@ -106,34 +107,86 @@ class SortingRobot:
         Returns True if the robot's light is on and False otherwise.
         """
         return self._light == "ON"
+    
+    def go_back(self):
+        stat = f" item {self._item}, position {self._list[self._position]},  time {self._time}"
+        if self.compare_item() == -1:
+            if self.can_move_left() == True:
+                print("Moving Left")
+                self.move_left()
+                print(stat, "118")
+                self.go_back()
+            if self.can_move_left() == False:         
+                self.sort()
+        elif self.compare_item() == 1:
+            if self.can_move_left() == True:
+                self.swap_item()
+                print(stat, "128")
+                self.go_back()
+            if self.can_move_left() == False:
+                self.sort()
+                print(stat, "132")
+        elif self.compare_item() == None:
+            if self.can_move_left() == False:
+                self.swap_item()
+                self.move_right()
+                if self.compare_item == -1:
+                    self.move_right()
+                    self.sort()
+                else:
+                    print("here")
+                    self.go_back()
+            else:
+                self.set_light_on()
+                self.sort()
+
+
 
 
     def sort(self):
-        stat = f" position {self._list[self._position]}, item {self._item}, time {self._time}"
-        print(stat)
-        if self._time > 10:
-                print("self")
-                return("self")
-        if self.compare_item() == None and self.light_is_on() == False:
-            self.swap_item()
+        # stat = f" item {self._item}, position {self._list[self._position]},  time {self._time} {l}"
+
+        if self.light_is_on() == True:
+                print("self 126")
+                return(self)
+        if self.compare_item() == None: 
+            if self.light_is_on() == False:
+                self.swap_item()
+                self.move_right()
+
+                self.sort()
+            else: 
+                self.swap_item()
+        else: 
+            pass
+        if self.compare_item() == -1: 
+            if self.can_move_right() == True:
+                print(" 150 Swap Item and Move right")
+                self.swap_item()
+                self.move_right()
+
+                self.sort()
+            else:      
+                print("155")
+                self.go_back()
+
+        if self.compare_item() == 1:
+            if self.can_move_right() == True:
+                print("161 Move right")
+                self.move_right()
+
+                self.sort()
+            else: 
+                print("158swap Item Go back")
+                self.swap_item()
+
+                self.go_back()
+        if self.compare_item() == 0:
+            print("0 Equal")
             self.move_right()
-            self.set_light_on()
-            print(stat, "set to True")
             self.sort()
-        if self.compare_item() == -1 and self.can_move_right() == True:
-            self.swap_item()
-            self.move_right()
-            self.sort()
-        if self.compare_item() == -1 and self.can_move_left() == True:
-            self.swap_item()
-            self.move_left
-            self.sort()
-        if self.compare_item() == 1 and self.can_move_right() == True:
-            self.move_right()
-            self.sort()
-        if self.compare_item() == 1 and self.can_move_left() == True:
-            self.move_left()
-            self.sort()
+                
+
         
 
             
@@ -150,10 +203,10 @@ class SortingRobot:
 if __name__ == "__main__":
     # Test our your implementation from the command line
     # with `python robot_sort.py`
-
     l = [15, 41, 58, 49, 26, 4, 28, 8, 61, 60, 65, 21, 78, 14, 35, 90, 54, 5, 0, 87, 82, 96, 43, 92, 62, 97, 69, 94, 99, 93, 76, 47, 2, 88, 51, 40, 95, 6, 23, 81, 30, 19, 25, 91, 18, 68, 71, 9, 66, 1, 45, 33, 3, 72, 16, 85, 27, 59, 64, 39, 32, 24, 38, 84, 44, 80, 11, 73, 42, 20, 10, 29, 22, 98, 17, 48, 52, 67, 53, 74, 77, 37, 63, 31, 7, 75, 36, 89, 70, 34, 79, 83, 13, 57, 86, 12, 56, 50, 55, 46]
+    # l = [5, 4, 20,99, 85, 16, 40, 6, 16, 3, 2, 1, 7 , 10]
+    # l = [5,4,3,2,1]
+    # robot = SortingRobot(l)
 
-    robot = SortingRobot(l)
-
-    robot.sort()
-    print(robot._list)
+    # robot.sort()
+    # print(robot._list)
