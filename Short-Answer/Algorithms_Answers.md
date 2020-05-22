@@ -16,13 +16,14 @@ c)O(n)
 This is function will run n number of times.
 
 ## Exercise II
-the building floor s would be an orderred list
-I would find the mid point and drop a egg off
-make a if else statment 
-if the egg breaks: throw away top half a run function on lower half
-if the egg doesn't break: run function on upper half
-The base would stop the reccursive loop when n len is 1
+The building floors would be a sorted list starting from 1(the first floor) to the top floor.
 
-O(log n)
-The function halves n on every loop.
+The plan is to divide the floors in half, and drop the egg from the middle floor
+if the egg breaks, that would mean the egg will break in all the floors above it, so I throw out all the floors above
+if the egg doesn't break I can assume that the egg wouldn't break on any floor below it, so I throw out all the floors below
+
+If this process is iterated with the remanding list,
+eventually you will be left with one floor
+
+
 
